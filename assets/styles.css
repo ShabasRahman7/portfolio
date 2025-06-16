@@ -425,6 +425,7 @@ body {
     border-radius: 0.75rem;
     padding: 1.5rem;
     transition: border-color 0.3s ease;
+    box-sizing:border-box;
 }
 .contact-name input:focus{
     outline: none;
@@ -453,6 +454,7 @@ body {
   border-radius: 0.75rem;
   padding: 1.5rem;
   resize: none;
+  box-sizing:border-box;
 }
 .contact-message textarea:focus{
     outline: none;
