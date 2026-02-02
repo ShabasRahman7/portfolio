@@ -5,7 +5,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
   initAOS();
-  initFullPageScroll();
   initNavbar();
   initMobileMenu();
   initTypingEffect();
@@ -54,77 +53,8 @@ function initAOS() {
   });
 }
 
-// Full-page scroll - single scroll = full section navigation (Desktop only)
-function initFullPageScroll() {
-  if (window.innerWidth < 1024) return; // Disable on mobile/tablet
-
-  const sections = document.querySelectorAll('main > section');
-  let isScrolling = false;
-  let currentSectionIndex = 0;
-
-  // Find current section based on scroll position - simplified
-  function getCurrentSection() {
-    const scrollPos = window.scrollY + 100;
-    let current = 0;
-    sections.forEach((section, index) => {
-      if (scrollPos >= section.offsetTop) {
-        current = index;
-      }
-    });
-    return current;
-  }
-
-  // Scroll to specific section
-  function scrollToSection(index) {
-    if (index < 0 || index >= sections.length) return;
-
-    isScrolling = true;
-    currentSectionIndex = index;
-
-    sections[index].scrollIntoView({ behavior: 'smooth' });
-
-    setTimeout(() => {
-      isScrolling = false;
-    }, 1000); // Increased timeout for smoother feel
-  }
-
-  window.addEventListener('wheel', (e) => {
-    if (window.innerWidth < 1024) return; // Double check
-
-    if (isScrolling) {
-      e.preventDefault();
-      return;
-    }
-
-    // Only hijack if we are scrolling vertically significantly
-    if (Math.abs(e.deltaY) < 20) return;
-
-    e.preventDefault();
-    currentSectionIndex = getCurrentSection();
-
-    if (e.deltaY > 0) {
-      scrollToSection(currentSectionIndex + 1);
-    } else {
-      scrollToSection(currentSectionIndex - 1);
-    }
-  }, { passive: false });
-
-  // Keyboard nav
-  window.addEventListener('keydown', (e) => {
-    if (window.innerWidth < 1024) return;
-
-    if (['ArrowDown', 'PageDown', 'ArrowUp', 'PageUp'].includes(e.key)) {
-      e.preventDefault();
-      currentSectionIndex = getCurrentSection();
-
-      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-        scrollToSection(currentSectionIndex + 1);
-      } else {
-        scrollToSection(currentSectionIndex - 1);
-      }
-    }
-  });
-}
+// Full-page scroll logic removed in favor of native CSS scroll-snap
+// This prevents the "stuck" scroll bug and works better with touchpads
 
 // Navbar scroll behavior
 function initNavbar() {

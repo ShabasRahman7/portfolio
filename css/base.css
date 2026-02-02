@@ -14,7 +14,12 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
-    scroll-snap-type: y proximity;
+}
+
+@media (min-width: 1024px) {
+    html {
+        scroll-snap-type: y proximity;
+    }
 }
 
 body {
@@ -185,8 +190,13 @@ ol {
 /* Section spacing */
 section {
     padding: var(--space-4xl) 0;
-    scroll-snap-align: start;
     scroll-margin-top: 5rem;
+}
+
+@media (min-width: 1024px) {
+    section {
+        scroll-snap-align: start;
+    }
 }
 
 /* Section title */
