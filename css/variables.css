@@ -80,9 +80,9 @@
     --accent-light: rgba(96, 165, 250, 0.15);
 
     --border-color: rgba(255, 255, 255, 0.06);
-    --card-bg: rgba(15, 15, 24, 0.6);
-    --glass-bg: rgba(15, 15, 24, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --card-bg: rgba(15, 15, 24, 0.5);
+    --glass-bg: rgba(15, 15, 24, 0.5);
+    --glass-border: rgba(255, 255, 255, 0.1);
 
     --nav-bg: rgba(10, 10, 15, 0.9);
     --code-bg: #1e1e2e;

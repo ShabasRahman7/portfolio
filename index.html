@@ -38,6 +38,9 @@
 
   <!-- Devicons for skill icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 
 <body>
@@ -87,7 +90,7 @@
     <section class="hero" id="hero">
       <div class="container">
         <div class="hero__content">
-          <div class="hero__text reveal">
+          <div class="hero__text" data-aos="fade-up">
             <span class="hero__greeting">Hello, I'm</span>
             <h1 class="hero__name">Shabas Rahman</h1>
             <div class="hero__title">
@@ -141,9 +144,9 @@
     <!-- About Section -->
     <section class="about" id="about">
       <div class="container">
-        <h2 class="section-title reveal">About Me</h2>
+        <h2 class="section-title" data-aos="fade-up">About Me</h2>
         <div class="about__content about__content--no-image">
-          <div class="about__text reveal">
+          <div class="about__text" data-aos="fade-up" data-aos-delay="100">
             <p class="about__description">
               I'm a <strong>Full-Stack Developer</strong> who builds production-grade web applications from the ground
               up.
@@ -160,7 +163,7 @@
               Whether it's a multi-tenant SaaS platform, an e-commerce system with payment integration,
               or an AI-powered assistant - I deliver end-to-end solutions that work in production.
             </p>
-            <div class="about__stats stagger-children">
+            <div class="about__stats stagger-children" data-aos="fade-up" data-aos-delay="200">
               <div class="about__stat">
                 <div class="about__stat-icon">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -201,8 +204,8 @@
     <!-- Skills Section -->
     <section class="skills" id="skills">
       <div class="container">
-        <h2 class="section-title reveal">Technical Skills</h2>
-        <div class="skills__grid stagger-children reveal">
+        <h2 class="section-title" data-aos="fade-up">Technical Skills</h2>
+        <div class="skills__grid stagger-children" data-aos="fade-up" data-aos-delay="200">
           <div class="skill-category">
             <h3 class="skill-category__title">Backend</h3>
             <div class="skill-category__list">
@@ -270,10 +273,10 @@
     <!-- Projects Section -->
     <section class="projects" id="projects">
       <div class="container">
-        <h2 class="section-title reveal">Featured Projects</h2>
+        <h2 class="section-title" data-aos="fade-up">Featured Projects</h2>
         <div class="projects__grid">
           <!-- Zenith -->
-          <article class="feature-card reveal">
+          <article class="feature-card" data-aos="fade-up">
             <img src="assets/images/zenith-preview.png" alt="Zenith Platform" class="feature-card__image"
               loading="lazy">
             <div class="feature-card__content">
@@ -313,7 +316,7 @@
           </article>
 
           <!-- Strive -->
-          <article class="feature-card reveal">
+          <article class="feature-card" data-aos="fade-up" data-aos-delay="100">
             <img src="assets/images/strive-preview.png" alt="Strive E-commerce" class="feature-card__image"
               loading="lazy">
             <div class="feature-card__content">
@@ -356,8 +359,8 @@
     <!-- Experience Section -->
     <section class="experience" id="experience">
       <div class="container">
-        <h2 class="section-title reveal">Experience</h2>
-        <div class="timeline reveal">
+        <h2 class="section-title" data-aos="fade-up">Experience</h2>
+        <div class="timeline" data-aos="fade-up" data-aos-delay="100">
           <div class="timeline__item">
             <div class="timeline__dot"></div>
             <div class="timeline__content">
@@ -385,8 +388,8 @@
     <!-- Certifications Section -->
     <section class="certifications" id="certifications">
       <div class="container">
-        <h2 class="section-title reveal">Certifications</h2>
-        <div class="certifications__grid reveal">
+        <h2 class="section-title" data-aos="fade-up">Certifications</h2>
+        <div class="certifications__grid" data-aos="fade-up" data-aos-delay="100">
           <div class="cert-card">
             <div class="cert-card__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -428,9 +431,9 @@
     <!-- Contact Section -->
     <section class="contact" id="contact">
       <div class="container">
-        <h2 class="section-title reveal">Get in Touch</h2>
+        <h2 class="section-title" data-aos="fade-up">Get in Touch</h2>
         <div class="contact__grid">
-          <div class="contact__info reveal">
+          <div class="contact__info" data-aos="fade-right">
             <h3 class="contact__info-title">Let's talk</h3>
             <p>Feel free to reach out for collaborations, opportunities, or just a friendly chat about tech!</p>
             <div class="contact__cards">
@@ -473,7 +476,7 @@
               </a>
             </div>
           </div>
-          <div class="contact__form-wrapper reveal">
+          <div class="contact__form-wrapper" data-aos="fade-left">
             <h3 class="contact__form-title">Send me a message</h3>
             <form id="contact-form" class="contact__form">
               <div class="form-group">
@@ -533,6 +536,9 @@
       emailjs.init("1pXutPZSxYllYrOhX");
     })();
   </script>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <!-- Main JS -->
   <script src="js/main.js"></script>

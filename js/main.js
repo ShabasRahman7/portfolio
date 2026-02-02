@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
-  initScrollReveal();
+  initAOS();
   initFullPageScroll();
   initNavbar();
   initMobileMenu();
@@ -43,44 +43,34 @@ function updateThemeIcon(theme) {
   toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
 }
 
-// Scroll reveal animations - fade in AND fade out based on visibility
-function initScrollReveal() {
-  const revealElements = document.querySelectorAll('.reveal');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      // Fade in when entering viewport, fade out when leaving
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-      } else {
-        entry.target.classList.remove('active');
-      }
-    });
-  }, {
-    threshold: 0.15,
-    rootMargin: '-50px 0px -50px 0px'
+// Initialize AOS
+function initAOS() {
+  AOS.init({
+    duration: 800,
+    easing: 'ease-out-cubic',
+    once: false,
+    mirror: true,
+    offset: 120
   });
-
-  revealElements.forEach(el => observer.observe(el));
 }
 
-// Full-page scroll - single scroll = full section navigation
+// Full-page scroll - single scroll = full section navigation (Desktop only)
 function initFullPageScroll() {
+  if (window.innerWidth < 1024) return; // Disable on mobile/tablet
+
   const sections = document.querySelectorAll('main > section');
   let isScrolling = false;
   let currentSectionIndex = 0;
 
-  // Find current section based on scroll position
+  // Find current section based on scroll position - simplified
   function getCurrentSection() {
-    const scrollPos = window.scrollY + window.innerHeight / 3;
+    const scrollPos = window.scrollY + 100;
     let current = 0;
-
     sections.forEach((section, index) => {
       if (scrollPos >= section.offsetTop) {
         current = index;
       }
     });
-
     return current;
   }
 
@@ -93,45 +83,45 @@ function initFullPageScroll() {
 
     sections[index].scrollIntoView({ behavior: 'smooth' });
 
-    // Prevent rapid scrolling
     setTimeout(() => {
       isScrolling = false;
-    }, 800);
+    }, 1000); // Increased timeout for smoother feel
   }
 
-  // Handle wheel events for full-page scroll
   window.addEventListener('wheel', (e) => {
+    if (window.innerWidth < 1024) return; // Double check
+
     if (isScrolling) {
       e.preventDefault();
       return;
     }
 
+    // Only hijack if we are scrolling vertically significantly
+    if (Math.abs(e.deltaY) < 20) return;
+
+    e.preventDefault();
     currentSectionIndex = getCurrentSection();
 
-    // Detect scroll direction
-    if (e.deltaY > 30) {
-      // Scrolling down
-      e.preventDefault();
+    if (e.deltaY > 0) {
       scrollToSection(currentSectionIndex + 1);
-    } else if (e.deltaY < -30) {
-      // Scrolling up
-      e.preventDefault();
+    } else {
       scrollToSection(currentSectionIndex - 1);
     }
   }, { passive: false });
 
-  // Handle keyboard navigation
+  // Keyboard nav
   window.addEventListener('keydown', (e) => {
-    if (isScrolling) return;
+    if (window.innerWidth < 1024) return;
 
-    currentSectionIndex = getCurrentSection();
+    if (['ArrowDown', 'PageDown', 'ArrowUp', 'PageUp'].includes(e.key)) {
+      e.preventDefault();
+      currentSectionIndex = getCurrentSection();
 
-    if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-      e.preventDefault();
-      scrollToSection(currentSectionIndex + 1);
-    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-      e.preventDefault();
-      scrollToSection(currentSectionIndex - 1);
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        scrollToSection(currentSectionIndex + 1);
+      } else {
+        scrollToSection(currentSectionIndex - 1);
+      }
     }
   });
 }
