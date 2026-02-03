@@ -113,10 +113,10 @@ function initTypingEffect() {
 
   const roles = [
     'Full-Stack Developer',
-    'Python & Django',
-    'React & Frontend',
-    'AWS & DevOps',
-    'AI & RAG Solutions'
+    'Backend Developer',
+    'Frontend Developer',
+    'DevOps Engineer',
+    'AI Developer'
   ];
 
   let roleIndex = 0;
