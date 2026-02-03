@@ -77,6 +77,7 @@
     display: flex;
     align-items: center;
     gap: var(--space-md);
+    flex-shrink: 0;
 }
 
 /* Theme toggle */
@@ -580,15 +581,18 @@
     align-items: center;
     gap: var(--space-md);
     padding: var(--space-md);
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
     transition: all var(--transition-base);
 }
 
 .contact__card:hover {
-    border-color: var(--accent);
+    border-color: rgba(59, 130, 246, 0.4);
     transform: translateX(4px);
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);
 }
 
 .contact__card-icon {
@@ -620,10 +624,13 @@
 }
 
 .contact__form-wrapper {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-xl);
     padding: var(--space-xl);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .contact__form-title {
@@ -639,8 +646,10 @@
 
 /* ========== Footer ========== */
 .footer {
-    background: var(--bg-secondary);
-    border-top: 1px solid var(--border-color);
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--glass-border);
     padding: var(--space-xl) 0;
 }
 
@@ -774,5 +783,59 @@
     .cert-card {
         flex-direction: column;
         text-align: center;
+    }
+
+    .navbar__actions {
+        gap: var(--space-sm);
+    }
+
+    .theme-toggle {
+        width: 36px;
+        height: 36px;
+    }
+
+    .theme-toggle svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .navbar__toggle {
+        padding: var(--space-xs);
+    }
+
+    .navbar__toggle span {
+        width: 20px;
+    }
+}
+
+@media (max-width: 320px) {
+    :root {
+        --container-padding: 0.75rem;
+    }
+
+    .navbar__logo {
+        font-size: 1.25rem;
+    }
+
+    .theme-toggle {
+        width: 32px;
+        height: 32px;
+    }
+
+    .theme-toggle svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .navbar__toggle span {
+        width: 18px;
+    }
+
+    .hero__name {
+        font-size: 1.75rem;
+    }
+
+    .hero__greeting {
+        font-size: 1rem;
     }
 }

@@ -223,7 +223,7 @@
     color: var(--text-muted);
     pointer-events: none;
     transition: all var(--transition-fast);
-    background: var(--bg-secondary);
+    background: transparent;
     padding: 0 var(--space-xs);
 }
 
@@ -234,10 +234,12 @@
     font-family: var(--font-primary);
     font-size: 1rem;
     color: var(--text-primary);
-    background: var(--bg-secondary);
-    border: 2px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
     transition: all var(--transition-fast);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .form-input:focus,
@@ -254,6 +256,7 @@
     top: 0;
     font-size: 0.8rem;
     color: var(--accent);
+    background: var(--bg-primary);
 }
 
 .form-textarea {
