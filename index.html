@@ -522,6 +522,9 @@
                 <textarea name="message" id="message" class="form-textarea" placeholder=" " required></textarea>
                 <label for="message" class="form-label">Your Message</label>
               </div>
+              <input type="hidden" name="access_key" value="6e058938-28bf-4c34-baab-281cd9e9edf3">
+              <input type="hidden" name="subject" value="New Submission from Portfolio">
+              <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
               <input type="hidden" name="time" id="timestamp">
               <button type="submit" class="btn btn-primary">
                 Send Message
@@ -560,13 +563,7 @@
     </div>
   </footer>
 
-  <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>
-    (function () {
-      emailjs.init("1pXutPZSxYllYrOhX");
-    })();
-  </script>
+
 
   <!-- AOS JS -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

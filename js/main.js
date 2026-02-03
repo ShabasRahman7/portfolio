@@ -152,7 +152,7 @@ function initTypingEffect() {
   type();
 }
 
-// Contact form handling with EmailJS
+// Contact form handling with Web3Forms
 function initContactForm() {
   const form = document.getElementById('contact-form');
   if (!form) return;
@@ -190,12 +190,23 @@ function initContactForm() {
     submitBtn.innerHTML = '<span class="spinner"></span> Sending...';
 
     try {
-      await emailjs.sendForm('service_cngzocj', 'template_572wwaa', form);
-      showToast('Message sent successfully!', 'success');
-      form.reset();
+      const formData = new FormData(form);
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        showToast('Message sent successfully!', 'success');
+        form.reset();
+      } else {
+        throw new Error(result.message);
+      }
     } catch (error) {
+      console.error('Web3Forms error:', error);
       showToast('Failed to send message. Please try again.', 'error');
-      console.error('EmailJS error:', error);
     } finally {
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalBtnText;
