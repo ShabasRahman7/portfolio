@@ -392,6 +392,15 @@
     gap: var(--space-xl);
 }
 
+/* Center the final card when it is the only item in the last row */
+@media (min-width: 769px) {
+    .projects__grid>.feature-card:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        width: min(100%, 520px);
+        justify-self: center;
+    }
+}
+
 /* ========== Experience Section ========== */
 .experience {
     /* Transparent - unified background */

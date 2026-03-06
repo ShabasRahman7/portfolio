@@ -37,6 +37,10 @@ body {
     position: relative;
 }
 
+body.menu-open {
+    overflow: hidden;
+}
+
 /* Floating gradient orbs - background decoration */
 body::before,
 body::after {

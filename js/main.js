@@ -59,50 +59,122 @@ function initAOS() {
 // Navbar scroll behavior
 function initNavbar() {
   const navbar = document.querySelector('.navbar');
-  const navLinks = document.querySelectorAll('.navbar__link');
-  const sections = document.querySelectorAll('section[id]');
+  const navLinks = [...document.querySelectorAll('.navbar__link')];
+  if (!navLinks.length) return;
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-      navbar?.classList.add('scrolled');
-    } else {
-      navbar?.classList.remove('scrolled');
-    }
+  const linkedSections = navLinks
+    .map(link => {
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#')) return null;
 
-    // Update active nav link based on scroll position
-    let current = '';
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 150;
-      if (window.scrollY >= sectionTop) {
-        current = section.getAttribute('id');
+      const section = document.querySelector(href);
+      if (!section) return null;
+
+      return { id: section.id, link, section };
+    })
+    .filter(Boolean);
+
+  if (!linkedSections.length) return;
+
+  function setActiveLink(sectionId) {
+    navLinks.forEach(link => {
+      const isActive = link.getAttribute('href') === `#${sectionId}`;
+      link.classList.toggle('active', isActive);
+    });
+  }
+
+  function getCurrentSectionId() {
+    const navbarHeight = navbar?.offsetHeight || 0;
+    const scrollPosition = window.scrollY + navbarHeight + (window.innerHeight * 0.25);
+    let currentId = linkedSections[0].id;
+
+    linkedSections.forEach(({ section, id }) => {
+      if (scrollPosition >= section.offsetTop) {
+        currentId = id;
       }
     });
 
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === `#${current}`) {
-        link.classList.add('active');
+    return currentId;
+  }
+
+  function syncNavbarState() {
+    navbar?.classList.toggle('scrolled', window.scrollY > 100);
+    setActiveLink(getCurrentSectionId());
+  }
+
+  let ticking = false;
+  const onViewportChange = () => {
+    if (ticking) return;
+
+    ticking = true;
+    requestAnimationFrame(() => {
+      syncNavbarState();
+      ticking = false;
+    });
+  };
+
+  window.addEventListener('scroll', onViewportChange, { passive: true });
+  window.addEventListener('resize', onViewportChange);
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      const href = link.getAttribute('href');
+      if (href?.startsWith('#')) {
+        setActiveLink(href.substring(1));
       }
     });
   });
+
+  syncNavbarState();
 }
 
 // Mobile menu toggle
 function initMobileMenu() {
   const toggle = document.querySelector('.navbar__toggle');
   const menu = document.querySelector('.navbar__menu');
+  if (!toggle || !menu) return;
 
-  toggle?.addEventListener('click', () => {
-    menu?.classList.toggle('open');
-    toggle.classList.toggle('active');
+  const closeMenu = () => {
+    menu.classList.remove('open');
+    toggle.classList.remove('active');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+  };
+
+  const openMenu = () => {
+    menu.classList.add('open');
+    toggle.classList.add('active');
+    toggle.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('menu-open');
+  };
+
+  toggle.addEventListener('click', () => {
+    if (menu.classList.contains('open')) {
+      closeMenu();
+      return;
+    }
+
+    openMenu();
   });
 
   // Close menu when clicking a link
   document.querySelectorAll('.navbar__link').forEach(link => {
-    link.addEventListener('click', () => {
-      menu?.classList.remove('open');
-      toggle?.classList.remove('active');
-    });
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Close menu on outside click
+  document.addEventListener('click', (event) => {
+    if (!menu.classList.contains('open')) return;
+    if (menu.contains(event.target) || toggle.contains(event.target)) return;
+
+    closeMenu();
+  });
+
+  // Close menu on Escape key
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeMenu();
+    }
   });
 }
 
@@ -245,8 +317,19 @@ function showToast(message, type = 'success') {
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
+      const href = anchor.getAttribute('href');
+      if (!href || href === '#') return;
+
+      let target = null;
+      try {
+        target = document.querySelector(href);
+      } catch (error) {
+        return;
+      }
+
+      if (!target) return;
+
       e.preventDefault();
-      const target = document.querySelector(anchor.getAttribute('href'));
       if (target) {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
